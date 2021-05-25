@@ -1,0 +1,43 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'br.com.gerenciamento'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://maven.springframework.org/release"
+	}
+	maven {
+		url "https://maven.restlet.com"
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.7.Final'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
+	implementation group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.17.0'
+
+}
+
+test {
+	useJUnitPlatform()
+}
