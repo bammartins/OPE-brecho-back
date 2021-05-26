@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 public class ProdutoRequest {
 
-    private Long produtoId;
     private String marca;
     private String descricao;
     private BigDecimal preco;
@@ -91,13 +90,6 @@ public class ProdutoRequest {
         this.fornecedorId = fornecedorId;
     }
 
-    public Long getProdutoId() {
-        return produtoId;
-    }
-
-    public void setProdutoId(Long produtoId) {
-        this.produtoId = produtoId;
-    }
 
     public Long getAcessoId() {
         return acessoId;

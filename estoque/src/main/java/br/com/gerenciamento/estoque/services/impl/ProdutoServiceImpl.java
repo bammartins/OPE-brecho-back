@@ -77,17 +77,19 @@ public class ProdutoServiceImpl implements ProdutoService {
         var produto = toEntity(request);
 
         var fornecedor = fornecedorRepository.findById(request.getFornecedorId())
-                .orElseThrow(()-> new NotFoundException("Fornecedor nao encontrado"));
+                .orElseThrow(() -> new NotFoundException(FORNECEDOR_NAO_ENCONTRADO));
 
         var acessoUsuario = acessoRepository.findById(acesso)
-                .orElseThrow(()-> new NotFoundException("Usuario nao encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuario nao encontrado"));
 
+        produto.setFornecedor(fornecedor);
 
         produtoRepository.save(produto);
 
         var movimentacao = new MovimentacaoProduto();
 
-       var produtoMov = produtoRepository.findByDescricao(request.getDescricao());
+
+        var produtoMov = produtoRepository.findByFornecedorIdAndDescricao(request.getFornecedorId(), request.getDescricao());
 
         movimentacao.setProduto(produtoMov);
         movimentacao.setTipoMovimentacao(TipoMovimentacao.AUMENTO);
@@ -101,14 +103,17 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public void alterarProduto(ProdutoRequest produtoRequest, Long usuario) throws NotFoundException {
+    public void alterarProduto(ProdutoRequest produtoRequest, Long usuario, Long produtoId) throws NotFoundException {
 
 
         var categoria = categoriaRepository.findById(produtoRequest.getCategoria())
                 .orElseThrow(() -> new NotFoundException("Categoria nao encontrada"));
 
+        var fornecedor = fornecedorRepository.findById(produtoRequest.getFornecedorId())
+                .orElseThrow(() -> new NotFoundException(FORNECEDOR_NAO_ENCONTRADO));
+
         var produtoParaAlterar = toEntity(produtoRequest);
-        produtoParaAlterar.setProdutoId(produtoRequest.getProdutoId());
+        produtoParaAlterar.setProdutoId(produtoId);
         produtoParaAlterar.setDescricao(produtoRequest.getDescricao());
         produtoParaAlterar.setMarca(produtoRequest.getMarca());
         produtoParaAlterar.setPreco(produtoRequest.getPreco());
@@ -120,9 +125,8 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoRepository.save(produtoParaAlterar);
 
 
-        var produtoMov = produtoRepository.findById(produtoRequest.getProdutoId())
+        var produtoMov = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO));
-
 
         var movimentacaoProduto = new MovimentacaoProduto();
 
@@ -130,17 +134,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         movimentacaoProduto.setTipoMovimentacao(TipoMovimentacao.ALTERACAO);
         movimentacaoProduto.setIdAcesso(acessoRepository.findById(usuario)
                 .orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO)));
-
         movimentacaoProduto.setProduto(produtoMov);
-
-        var fornecedor = fornecedorRepository.findById(produtoRequest.getFornecedorId())
-                .orElseThrow(() -> new NotFoundException(FORNECEDOR_NAO_ENCONTRADO));
-
         movimentacaoProduto.setQuantidade(produtoMov.getQuantidade());
-
         movimentacaoProduto.setFornecedor(fornecedor);
-
-
 
         movimentacaoProdutoRepository.save(movimentacaoProduto);
 
@@ -152,25 +148,27 @@ public class ProdutoServiceImpl implements ProdutoService {
         var produto = produtoRepository.findById(idProduto)
                 .orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO));
 
-        delecaoDeDados(produto, usuario);
-    }
-
-    private void delecaoDeDados(Produto produto, Long usuario) throws NotFoundException {
-
         produto.setStatus(Status.DESATIVO.getNome());
-
         produtoRepository.save(produto);
-    }
-
-    private List<MovimentacaoProduto> movimentacaoParaDeletar(Long id, Long usuario) throws NotFoundException {
-        List<MovimentacaoProduto> movimentacaoProdutoList = new ArrayList<>();
 
         var movimentacaoProduto = new MovimentacaoProduto();
         movimentacaoProduto.setData(LocalDateTime.now());
         movimentacaoProduto.setTipoMovimentacao(TipoMovimentacao.DELETADO);
         movimentacaoProduto.setIdAcesso(acessoRepository.findById(usuario)
                 .orElseThrow(() -> new NotFoundException("Usuario nao encontrado")));
-        movimentacaoProdutoList.add(movimentacaoProduto);
+        movimentacaoProduto.setProduto(produto);
+        movimentacaoProdutoRepository.save(movimentacaoProduto);
+
+    }
+
+    private void delecaoDeDados(Produto produto, Long usuario) throws NotFoundException {
+
+
+    }
+
+    private List<MovimentacaoProduto> movimentacaoParaDeletar(Long id, Long usuario) throws NotFoundException {
+        List<MovimentacaoProduto> movimentacaoProdutoList = new ArrayList<>();
+
 
         return movimentacaoProdutoList;
     }

@@ -9766,14 +9766,6 @@ INSERT INTO categoria (nome_categoria, status) VALUES ('Bermuda', 'ATIVO');
 INSERT INTO categoria (nome_categoria, status) VALUES ('Short', 'ATIVO');
 
 
-INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
-
-INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
-
-INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
-
-
-
 INSERT INTO produto(produto_id, descricao, preco, quantidade, tamanho, marca, cor, modelo, categoria_categoria_uid, status) VALUES (1, 'produto1', 10, 10, 'P', 'TesteMarca', 'Preto', 'Basica', 1, 'ATIVO');
 
 INSERT INTO produto(produto_id, descricao, preco, quantidade, tamanho, marca, cor, modelo, categoria_categoria_uid, status) VALUES (2, 'produto2', 10, 10, 'P', 'TesteMarca', 'Preto', 'Basica', 1, 'ATIVO');
@@ -9790,3 +9782,9 @@ INSERT INTO produto(produto_id, descricao, preco, quantidade, tamanho, marca, co
 
 INSERT INTO produto(produto_id, descricao, preco, quantidade, tamanho, marca, cor, modelo, categoria_categoria_uid, status) VALUES (8, 'produto8', 10, 10, 'P', 'TesteMarca', 'Preto', 'Basica', 1, 'DESATIVO');
 
+
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email, produtoId) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com', 1);
+
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email, produtoId) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com', 2);
+
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email, produtoId) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com', 3);

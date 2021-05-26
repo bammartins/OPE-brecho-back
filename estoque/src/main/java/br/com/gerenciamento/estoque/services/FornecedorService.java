@@ -10,11 +10,11 @@ public interface FornecedorService {
 
     FornecedorResponse find(Long idFornecedor) throws NotFoundException;
 
-    List<FornecedorResponse> findAll() throws NotFoundException;
+    List<FornecedorResponse> findAll(boolean isDesativado) throws NotFoundException;
 
     void cadastrar(FornecedorRequest fornecedorRequest) throws NotFoundException;
 
-    void alterar(FornecedorRequest produto, Long usuario) throws NotFoundException;
+    void alterar(FornecedorRequest produto, Long usuario, Long fornecedorId) throws NotFoundException;
 
     void deletar(Long idProduto, Long usuario) throws NotFoundException;
 }

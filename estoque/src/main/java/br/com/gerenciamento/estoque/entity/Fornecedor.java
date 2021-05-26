@@ -4,7 +4,6 @@ import br.com.gerenciamento.estoque.domain.response.FornecedorResponse;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +14,7 @@ import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Fornecedor implements Serializable {
@@ -50,19 +50,15 @@ public class Fornecedor implements Serializable {
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<MovimentacaoProduto> movimentacaoProdutos = new ArrayList<>();
-
-    @JoinColumn(name = "produtoId")
-    @OneToMany
-    private List<Produto> produtos = new ArrayList<>();
-
     private String status;
+
+    @OneToMany(mappedBy = "fornecedor")
+    private List<Produto> produtos;
 
     public Fornecedor() {
     }
 
-    public Fornecedor(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, List<MovimentacaoProduto> movimentacaoProdutos, String status) {
+    public Fornecedor(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, String status) {
         this.id = id;
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
@@ -73,7 +69,6 @@ public class Fornecedor implements Serializable {
         this.bairro = bairro;
         this.cep = cep;
         this.cidade = cidade;
-        this.movimentacaoProdutos = movimentacaoProdutos;
         this.status = status;
     }
 
@@ -165,14 +160,6 @@ public class Fornecedor implements Serializable {
         this.cidade = cidade;
     }
 
-    public List<MovimentacaoProduto> getMovimentacaoProdutos() {
-        return movimentacaoProdutos;
-    }
-
-    public void setMovimentacaoProdutos(List<MovimentacaoProduto> movimentacaoProdutos) {
-        this.movimentacaoProdutos = movimentacaoProdutos;
-    }
-
     public String getResponsavel() {
         return responsavel;
     }
@@ -199,15 +186,8 @@ public class Fornecedor implements Serializable {
 
     public FornecedorResponse toDtoFornecedor() {
         return new FornecedorResponse(id, nomeFantasia, razaoSocial, cnpj, logradouro, numero,
-                complemento, bairro, cep, cidade.getNome(), cidade.getEstado().getNome(), movimentacaoProdutos.size());
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+                complemento, bairro, cep, cidade.getNome(), cidade.getEstado().getNome(), responsavel, telefone, email,
+                produtos.size() > 0 ? produtos.stream().map(Produto::toDtoProdutos).collect(Collectors.toList()) : new ArrayList<>());
     }
 
     @Override

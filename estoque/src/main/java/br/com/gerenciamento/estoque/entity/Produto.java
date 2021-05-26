@@ -1,20 +1,19 @@
 package br.com.gerenciamento.estoque.entity;
 
 import br.com.gerenciamento.estoque.domain.response.ProdutoResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 public class Produto implements Serializable {
@@ -44,10 +43,14 @@ public class Produto implements Serializable {
 
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
+
     public Produto() {
     }
 
-    public Produto(Long produtoId, String descricao, BigDecimal preco, Integer quantidade, String tamanho, String marca, String cor, String modelo, Categoria categoria, String status) {
+    public Produto(Long produtoId, String descricao, BigDecimal preco, Integer quantidade, String tamanho, String marca, String cor, String modelo, Categoria categoria, String status, Fornecedor fornecedor) {
         this.produtoId = produtoId;
         this.descricao = descricao;
         this.preco = preco;
@@ -58,6 +61,7 @@ public class Produto implements Serializable {
         this.modelo = modelo;
         this.categoria = categoria;
         this.status = status;
+        this.fornecedor = fornecedor;
     }
 
     public String getStatus() {
@@ -140,6 +144,14 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
@@ -150,10 +162,11 @@ public class Produto implements Serializable {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public ProdutoResponse toDtoProdutos (){
-        return new ProdutoResponse(produtoId, descricao, preco, quantidade, tamanho, cor, modelo, categoria.getNome(), status );
+    public ProdutoResponse toDtoProdutos() {
+        return new ProdutoResponse(produtoId, descricao, preco, quantidade, tamanho, cor, modelo, categoria.getNome(), status);
     }
-    public ProdutoResponse toDto (){
+
+    public ProdutoResponse toDto() {
         return new ProdutoResponse();
     }
 }

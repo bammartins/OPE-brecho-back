@@ -1,8 +1,10 @@
 package br.com.gerenciamento.estoque.domain.request;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class FornecedorRequest {
 
-    private Long idFornecedor;
     private String nomeFantasia;
     private String razaoSocial;
     private Long cnpj;
@@ -12,14 +14,9 @@ public class FornecedorRequest {
     private String bairro;
     private String cep;
     private Integer cidade;
-
-    public Long getIdFornecedor() {
-        return idFornecedor;
-    }
-
-    public void setIdFornecedor(Long idFornecedor) {
-        this.idFornecedor = idFornecedor;
-    }
+    private String responsavel;
+    private Integer telefone;
+    private String email;
 
     public String getNomeFantasia() {
         return nomeFantasia;
@@ -93,4 +90,38 @@ public class FornecedorRequest {
         this.cidade = cidade;
     }
 
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Integer getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Integer telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

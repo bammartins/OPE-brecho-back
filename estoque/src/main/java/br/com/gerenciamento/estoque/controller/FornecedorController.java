@@ -32,9 +32,11 @@ public class FornecedorController {
     }
 
     @GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<FornecedorResponse> localizarFornecedor() throws NotFoundException {
+    public List<FornecedorResponse> localizarTodosFornecedor(
+            @RequestParam (required = false) boolean isDesativado
+    ) throws NotFoundException {
 
-        return fornecedorService.findAll();
+        return fornecedorService.findAll(isDesativado);
     }
 
     @PostMapping(path = "/cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,8 +55,9 @@ public class FornecedorController {
     @PostMapping(path = "/alterar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void alterarFornecedor(@RequestBody FornecedorRequest produto,
-                               @RequestParam Long usuario) throws NotFoundException {
-        fornecedorService.alterar(produto, usuario);
+                                  @RequestParam Long usuario,
+                                  @RequestParam Long fornecedorId) throws NotFoundException {
+        fornecedorService.alterar(produto, usuario, fornecedorId);
     }
 
 }

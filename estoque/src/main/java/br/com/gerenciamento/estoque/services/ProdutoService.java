@@ -13,7 +13,7 @@ public interface ProdutoService {
 
     void salvar(ProdutoRequest produto, Long acesso) throws NotFoundException;
 
-    void alterarProduto(ProdutoRequest produto, Long usuario) throws NotFoundException;
+    void alterarProduto(ProdutoRequest produto, Long usuario, Long produtoId) throws NotFoundException;
 
     void deletar(Long idProduto, Long usuario) throws NotFoundException;
 

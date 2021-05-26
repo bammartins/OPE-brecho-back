@@ -58,7 +58,9 @@ public class ProdutoController {
     @PostMapping(path = "/alterar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void alterarProduto(@RequestBody ProdutoRequest produto,
-                               @RequestParam Long usuario) throws NotFoundException {
-        service.alterarProduto(produto, usuario);
+                               @RequestParam Long usuario,
+                               @RequestParam Long produtoId
+    ) throws NotFoundException {
+        service.alterarProduto(produto, usuario, produtoId);
     }
 }
