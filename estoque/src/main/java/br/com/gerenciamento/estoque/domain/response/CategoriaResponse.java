@@ -24,7 +24,7 @@ public final class CategoriaResponse {
         return nome;
     }
 
-    public String getProdutos() {
+    public String getStatus() {
         return status;
     }
 

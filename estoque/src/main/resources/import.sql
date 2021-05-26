@@ -9766,20 +9766,11 @@ INSERT INTO categoria (nome_categoria, status) VALUES ('Bermuda', 'ATIVO');
 INSERT INTO categoria (nome_categoria, status) VALUES ('Short', 'ATIVO');
 
 
---INSERT INTO contato(email, status, telefone) VALUES ('testeContato1@com', 'ATIVO', 0123456789);
+INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
 
---INSERT INTO contato(email, status, telefone) VALUES ('testeContato2@com', 'ATIVO', 0123456789);
+INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
 
---INSERT INTO contato(email, status, telefone) VALUES ('testeContato3@com', 'ATIVO', 0123456789);
-
---INSERT INTO contato(email, status, telefone) VALUES ('testeContato4@com', 'DESATIVO', 0123456789);
-
-
---INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
-
---INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia2', 'TesteRazaoSocial2', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
-
---INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia3', 'TesteRazaoSocial3', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'DESATIVO');
+INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status, responsavel, telefone, email) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO', 'Responsavel1' , 0123456789, 'testeContato3@com');
 
 
 

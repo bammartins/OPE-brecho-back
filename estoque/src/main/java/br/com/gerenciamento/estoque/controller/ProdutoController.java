@@ -35,7 +35,7 @@ public class ProdutoController {
 
     @GetMapping(path = "/todas", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProdutoResponse> findAll(
-            @RequestParam (required = false) boolean isDesativado
+            @RequestParam(required = false) boolean isDesativado
     ) throws NotFoundException {
 
         return service.findAll(isDesativado);
@@ -43,8 +43,9 @@ public class ProdutoController {
 
     @PostMapping(path = "/cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void adicionarProduto(@RequestBody ProdutoRequest produto) throws NotFoundException {
-        service.salvar(produto);
+    public void adicionarProduto(@RequestBody ProdutoRequest produto,
+                                 @RequestParam Long acesso) throws NotFoundException {
+        service.salvar(produto, acesso);
     }
 
     @PostMapping(path = "/deletar", produces = MediaType.APPLICATION_JSON_VALUE)

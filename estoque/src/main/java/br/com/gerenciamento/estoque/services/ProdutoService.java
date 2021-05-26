@@ -11,7 +11,7 @@ public interface ProdutoService {
 
     List<ProdutoResponse> findAll(boolean isDesativado) throws NotFoundException;
 
-    void salvar(ProdutoRequest produto) throws NotFoundException;
+    void salvar(ProdutoRequest produto, Long acesso) throws NotFoundException;
 
     void alterarProduto(ProdutoRequest produto, Long usuario) throws NotFoundException;
 

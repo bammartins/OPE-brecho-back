@@ -74,6 +74,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public void salvar(CategoriaRequest categoriaRequest) {
 
         var categoria = toEntityCategoria(categoriaRequest);
+        categoria.setStatus(Status.ATIVO.getNome());
         categoriaRepository.save(categoria);
     }
 

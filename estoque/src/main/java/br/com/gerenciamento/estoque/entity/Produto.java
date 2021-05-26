@@ -42,15 +42,12 @@ public class Produto implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Categoria categoria;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<MovimentacaoProduto> movimentacaoProduto;
-
     private String status;
 
     public Produto() {
     }
 
-    public Produto(Long produtoId, String descricao, BigDecimal preco, Integer quantidade, String tamanho, String marca, String cor, String modelo, Categoria categoria, List<MovimentacaoProduto> movimentacaoProduto, String status) {
+    public Produto(Long produtoId, String descricao, BigDecimal preco, Integer quantidade, String tamanho, String marca, String cor, String modelo, Categoria categoria, String status) {
         this.produtoId = produtoId;
         this.descricao = descricao;
         this.preco = preco;
@@ -60,7 +57,6 @@ public class Produto implements Serializable {
         this.cor = cor;
         this.modelo = modelo;
         this.categoria = categoria;
-        this.movimentacaoProduto = movimentacaoProduto;
         this.status = status;
     }
 
@@ -134,14 +130,6 @@ public class Produto implements Serializable {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public List<MovimentacaoProduto> getMovimentacaoProduto() {
-        return movimentacaoProduto;
-    }
-
-    public void setMovimentacaoProduto(List<MovimentacaoProduto> movimentacaoProduto) {
-        this.movimentacaoProduto = movimentacaoProduto;
     }
 
     public String getDescricao() {

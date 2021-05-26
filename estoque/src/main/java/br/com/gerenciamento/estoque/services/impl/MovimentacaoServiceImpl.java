@@ -80,7 +80,6 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
             var produtoCompra = produtoRepository.findById(movimentacaoProduto.getProdutoId()).orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO));
 
             produtoCompra.setQuantidade(produtoCompra.getQuantidade() + movimentacaoProduto.getQuantidade());
-            produtoCompra.getMovimentacaoProduto().add(movimentacao);
 
             produtoRepository.save(produtoCompra);
 
@@ -92,8 +91,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
             if (produtoCompra.getQuantidade() < 0) {
                 throw new Exception("Quantidade para retirada menor que o permitido");
             }
-            produtoCompra.getMovimentacaoProduto().add(movimentacao);
-            if (produtoCompra.getQuantidade() < 0) {
+            if (produtoCompra.getQuantidade() <= 0) {
                 produtoCompra.setStatus(Status.DESATIVO.getNome());
             }
             produtoRepository.save(produtoCompra);

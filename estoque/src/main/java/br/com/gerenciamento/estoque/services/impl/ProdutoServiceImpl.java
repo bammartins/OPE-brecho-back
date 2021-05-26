@@ -28,6 +28,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     public static final String PRODUTO_EXCLUIDO = "PRODUTO EXCLUIDO";
     public static final String PRODUTO_NAO_ENCONTRADO = "Produto nao encontrado";
+    public static final String FORNECEDOR_NAO_ENCONTRADO = "Fornecedor nao encontrado";
+
     @Autowired
     private ProdutoRepository produtoRepository;
 
@@ -70,8 +72,32 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public void salvar(ProdutoRequest request) throws NotFoundException {
-        produtoRepository.save(toEntity(request));
+    public void salvar(ProdutoRequest request, Long acesso) throws NotFoundException {
+
+        var produto = toEntity(request);
+
+        var fornecedor = fornecedorRepository.findById(request.getFornecedorId())
+                .orElseThrow(()-> new NotFoundException("Fornecedor nao encontrado"));
+
+        var acessoUsuario = acessoRepository.findById(acesso)
+                .orElseThrow(()-> new NotFoundException("Usuario nao encontrado"));
+
+
+        produtoRepository.save(produto);
+
+        var movimentacao = new MovimentacaoProduto();
+
+       var produtoMov = produtoRepository.findByDescricao(request.getDescricao());
+
+        movimentacao.setProduto(produtoMov);
+        movimentacao.setTipoMovimentacao(TipoMovimentacao.AUMENTO);
+        movimentacao.setData(LocalDateTime.now());
+        movimentacao.setFornecedor(fornecedor);
+        movimentacao.setQuantidade(request.getQuantidade());
+        movimentacao.setIdAcesso(acessoUsuario);
+
+        movimentacaoProdutoRepository.save(movimentacao);
+
     }
 
     @Override
@@ -82,6 +108,7 @@ public class ProdutoServiceImpl implements ProdutoService {
                 .orElseThrow(() -> new NotFoundException("Categoria nao encontrada"));
 
         var produtoParaAlterar = toEntity(produtoRequest);
+        produtoParaAlterar.setProdutoId(produtoRequest.getProdutoId());
         produtoParaAlterar.setDescricao(produtoRequest.getDescricao());
         produtoParaAlterar.setMarca(produtoRequest.getMarca());
         produtoParaAlterar.setPreco(produtoRequest.getPreco());
@@ -90,6 +117,13 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoParaAlterar.setCategoria(categoria);
         produtoParaAlterar.setCor(produtoRequest.getCor());
 
+        produtoRepository.save(produtoParaAlterar);
+
+
+        var produtoMov = produtoRepository.findById(produtoRequest.getProdutoId())
+                .orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO));
+
+
         var movimentacaoProduto = new MovimentacaoProduto();
 
         movimentacaoProduto.setData(LocalDateTime.now());
@@ -97,21 +131,19 @@ public class ProdutoServiceImpl implements ProdutoService {
         movimentacaoProduto.setIdAcesso(acessoRepository.findById(usuario)
                 .orElseThrow(() -> new NotFoundException(PRODUTO_NAO_ENCONTRADO)));
 
-        movimentacaoProduto.setProduto(produtoParaAlterar);
+        movimentacaoProduto.setProduto(produtoMov);
 
-    //    Fornecedor fornecedor = fornecedorRepository.findFornecedorByProduto(produtoParaAlterar.getProdutoId());
+        var fornecedor = fornecedorRepository.findById(produtoRequest.getFornecedorId())
+                .orElseThrow(() -> new NotFoundException(FORNECEDOR_NAO_ENCONTRADO));
 
-      //  movimentacaoProduto.setFornecedor(fornecedor);
+        movimentacaoProduto.setQuantidade(produtoMov.getQuantidade());
+
+        movimentacaoProduto.setFornecedor(fornecedor);
+
+
 
         movimentacaoProdutoRepository.save(movimentacaoProduto);
 
-        List<MovimentacaoProduto> movimentacaoProdutoList = movimentacaoProdutoRepository.findbyProdutoProdutoId(produtoRequest.getProdutoId());
-
-        movimentacaoProdutoList.add(movimentacaoProduto);
-
-        produtoParaAlterar.setMovimentacaoProduto(movimentacaoProdutoList);
-
-        produtoRepository.save(produtoParaAlterar);
 
     }
 
@@ -126,7 +158,6 @@ public class ProdutoServiceImpl implements ProdutoService {
     private void delecaoDeDados(Produto produto, Long usuario) throws NotFoundException {
 
         produto.setStatus(Status.DESATIVO.getNome());
-        produto.setMovimentacaoProduto(movimentacaoParaDeletar(produto.getProdutoId(), usuario));
 
         produtoRepository.save(produto);
     }
