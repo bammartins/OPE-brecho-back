@@ -5,7 +5,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class CategoriaRequest {
 
+    private Long idCategoria;
+
     private String nome;
+
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
     public String getNome() {
         return nome;

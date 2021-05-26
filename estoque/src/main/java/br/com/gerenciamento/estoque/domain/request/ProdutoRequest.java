@@ -1,6 +1,5 @@
 package br.com.gerenciamento.estoque.domain.request;
 
-import br.com.gerenciamento.estoque.entity.Categoria;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,14 +9,23 @@ public class ProdutoRequest {
 
     private Long produtoId;
     private String marca;
+    private String descricao;
     private BigDecimal preco;
     private Integer quantidade;
     private String tamanho;
     private String cor;
     private String modelo;
-    private Categoria categoria;
+    private Long categoria;
     private Long acessoId;
     private Long fornecedorId;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public String getMarca() {
         return marca;
@@ -67,11 +75,11 @@ public class ProdutoRequest {
         this.modelo = modelo;
     }
 
-    public Categoria getCategoria() {
+    public Long getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(Long categoria) {
         this.categoria = categoria;
     }
 

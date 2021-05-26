@@ -27,10 +27,11 @@ public class RelatoriosController {
         relatoriosService.criar(produto, fornecedor);
     }
 
-    @PostMapping(path = "/acesos/{tipo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/acessos/{tipo}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void relatorioAcessos(
-            @PathVariable String tipo) throws NotFoundException {
+            @PathVariable String tipo,
+            @RequestParam String caminho) throws NotFoundException {
         relatoriosService.relatorioUsuarios(tipo);
     }
 

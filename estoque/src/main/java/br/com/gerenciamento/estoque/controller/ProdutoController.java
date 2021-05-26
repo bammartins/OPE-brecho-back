@@ -49,7 +49,8 @@ public class ProdutoController {
 
     @PostMapping(path = "/deletar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void deletarProduto(@RequestParam Long id, Long usuario) throws NotFoundException {
+    public void deletarProduto(@RequestParam Long id,
+                               @RequestParam Long usuario) throws NotFoundException {
         service.deletar(id, usuario);
     }
 

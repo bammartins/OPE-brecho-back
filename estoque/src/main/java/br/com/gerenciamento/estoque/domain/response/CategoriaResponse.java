@@ -3,18 +3,16 @@ package br.com.gerenciamento.estoque.domain.response;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.List;
-
 public final class CategoriaResponse {
 
     private final Long id;
     private final String nome;
-    private final List<ProdutoResponse> produtos;
+    private final String status;
 
-    public CategoriaResponse(Long id, String nome, List<ProdutoResponse> produtos) {
+    public CategoriaResponse(Long id, String nome, String status) {
         this.id = id;
         this.nome = nome;
-        this.produtos = produtos;
+        this.status = status;
     }
 
 
@@ -26,8 +24,8 @@ public final class CategoriaResponse {
         return nome;
     }
 
-    public List<ProdutoResponse> getProdutos() {
-        return produtos;
+    public String getProdutos() {
+        return status;
     }
 
     @Override

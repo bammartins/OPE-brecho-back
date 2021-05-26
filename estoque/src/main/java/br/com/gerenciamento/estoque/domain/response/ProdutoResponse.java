@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public final class ProdutoResponse {
 
     private Long produtoId;
-    private String nome;
+    private String descricao;
     private BigDecimal preco;
     private Integer quantidade;
     private String tamanho;
@@ -20,17 +20,24 @@ public final class ProdutoResponse {
     public ProdutoResponse() {
     }
 
-    public ProdutoResponse(Long produtoId, String nome, BigDecimal preco, Integer quantidade,
-                           String tamanho, String cor, String modelo, String status, String categoria) {
+    public ProdutoResponse(Long produtoId, String descricao, BigDecimal preco, Integer quantidade, String tamanho, String cor, String modelo, String categoria, String status) {
         this.produtoId = produtoId;
-        this.nome = nome;
+        this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
         this.tamanho = tamanho;
         this.cor = cor;
         this.modelo = modelo;
-        this.status = status;
         this.categoria = categoria;
+        this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Long getProdutoId() {
@@ -39,14 +46,6 @@ public final class ProdutoResponse {
 
     public void setProdutoId(Long produtoId) {
         this.produtoId = produtoId;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public BigDecimal getPreco() {

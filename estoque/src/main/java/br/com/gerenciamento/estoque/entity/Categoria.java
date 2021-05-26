@@ -4,19 +4,13 @@ import br.com.gerenciamento.estoque.domain.response.CategoriaResponse;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "CATEGORIA")
@@ -32,18 +26,14 @@ public class Categoria implements Serializable {
     @Column(name = "NOME_CATEGORIA")
     private String nome;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Produto> produtos = new ArrayList<>();
-
     private String status;
 
     public Categoria() {
     }
 
-    public Categoria(Long id, String nome, List<Produto> produtos, String status) {
+    public Categoria(Long id, String nome, String status) {
         this.id = id;
         this.nome = nome;
-        this.produtos = produtos;
         this.status = status;
     }
 
@@ -67,14 +57,6 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
 
 
     @Override
@@ -87,11 +69,8 @@ public class Categoria implements Serializable {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public CategoriaResponse toDtoCategoria() {
-        return new CategoriaResponse(id, nome, produtos.stream().map(Produto::toDto).collect(Collectors.toList()));
-    }
-    public CategoriaResponse toDtoVazio(){
-        return new CategoriaResponse(id, nome, List.of());
+    public CategoriaResponse toDtoCategoria(){
+        return new CategoriaResponse(id, nome, status);
     }
 
 }

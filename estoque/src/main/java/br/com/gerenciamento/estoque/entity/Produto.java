@@ -163,7 +163,7 @@ public class Produto implements Serializable {
     }
 
     public ProdutoResponse toDtoProdutos (){
-        return new ProdutoResponse(produtoId, marca, preco, quantidade, tamanho, cor, modelo, status, categoria.getNome());
+        return new ProdutoResponse(produtoId, descricao, preco, quantidade, tamanho, cor, modelo, categoria.getNome(), status );
     }
     public ProdutoResponse toDto (){
         return new ProdutoResponse();

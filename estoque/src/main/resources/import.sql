@@ -9766,21 +9766,21 @@ INSERT INTO categoria (nome_categoria, status) VALUES ('Bermuda', 'ATIVO');
 INSERT INTO categoria (nome_categoria, status) VALUES ('Short', 'ATIVO');
 
 
+--INSERT INTO contato(email, status, telefone) VALUES ('testeContato1@com', 'ATIVO', 0123456789);
 
-INSERT INTO fornecedores(nome_fantasia, razao_social, cnpj, responsavel, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Vacilao', 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
+--INSERT INTO contato(email, status, telefone) VALUES ('testeContato2@com', 'ATIVO', 0123456789);
 
-INSERT INTO fornecedores(nome_fantasia, razao_social, cnpj, responsavel, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia2', 'TesteRazaoSocial2', 123, 'Vacilao', 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
+--INSERT INTO contato(email, status, telefone) VALUES ('testeContato3@com', 'ATIVO', 0123456789);
 
-INSERT INTO fornecedores(nome_fantasia, razao_social, cnpj, responsavel, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia3', 'TesteRazaoSocial3', 123, 'Vacilao', 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'DESATIVO');
+--INSERT INTO contato(email, status, telefone) VALUES ('testeContato4@com', 'DESATIVO', 0123456789);
 
 
-INSERT INTO contato(email, status, telefone, fornecedor_id) VALUES ('testeContato1@com', 'ATIVO', 0123456789, 1);
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia1', 'TesteRazaoSocial1', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
 
-INSERT INTO contato(email, status, telefone, fornecedor_id) VALUES ('testeContato2@com', 'ATIVO', 0123456789, 2);
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia2', 'TesteRazaoSocial2', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'ATIVO');
 
-INSERT INTO contato(email, status, telefone, fornecedor_id) VALUES ('testeContato3@com', 'ATIVO', 0123456789, 3);
+--INSERT INTO fornecedor(nome_fantasia, razao_social, cnpj, logradouro, numero, complemento,  bairro, cep, cidade_id, status) VALUES ('TesteNomeFantasia3', 'TesteRazaoSocial3', 123, 'Rua A', '10', 'casa', 'Osasco', '00000-000', 1, 'DESATIVO');
 
-INSERT INTO contato(email, status, telefone, fornecedor_id) VALUES ('testeContato4@com', 'DESATIVO', 0123456789, 3);
 
 
 INSERT INTO produto(produto_id, descricao, preco, quantidade, tamanho, marca, cor, modelo, categoria_categoria_uid, status) VALUES (1, 'produto1', 10, 10, 'P', 'TesteMarca', 'Preto', 'Basica', 1, 'ATIVO');

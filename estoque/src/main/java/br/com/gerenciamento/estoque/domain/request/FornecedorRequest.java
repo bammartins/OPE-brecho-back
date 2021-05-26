@@ -1,19 +1,17 @@
 package br.com.gerenciamento.estoque.domain.request;
 
-public class FornecedoresRequest {
+public class FornecedorRequest {
 
     private Long idFornecedor;
     private String nomeFantasia;
     private String razaoSocial;
     private Long cnpj;
-    private String responsavel;
     private String logradouro;
     private String numero;
     private String complemento;
     private String bairro;
     private String cep;
     private Integer cidade;
-    private Integer estado;
 
     public Long getIdFornecedor() {
         return idFornecedor;
@@ -45,14 +43,6 @@ public class FornecedoresRequest {
 
     public void setCnpj(Long cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
     }
 
     public String getLogradouro() {
@@ -103,11 +93,4 @@ public class FornecedoresRequest {
         this.cidade = cidade;
     }
 
-    public Integer getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Integer estado) {
-        this.estado = estado;
-    }
 }

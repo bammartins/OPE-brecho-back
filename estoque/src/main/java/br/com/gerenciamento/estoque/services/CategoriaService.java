@@ -13,4 +13,9 @@ public interface CategoriaService {
     void salvar (CategoriaRequest categoriaRequest);
 
     List<CategoriaResponse> findAll(boolean isDesativado);
+
+    void deletar(Long idCategoria, Long usuario) throws Exception;
+
+    void alterarContato(CategoriaRequest contatoRequest, Long usuario) throws NotFoundException;
+
 }

@@ -26,7 +26,7 @@ public class MovimentacaoProduto implements Serializable {
     private Produto produto;
 
     @ManyToOne
-    private Fornecedores fornecedor;
+    private Fornecedor fornecedor;
 
     @ManyToOne
     private Acesso idAcesso;
@@ -40,7 +40,7 @@ public class MovimentacaoProduto implements Serializable {
     public MovimentacaoProduto() {
     }
 
-    public MovimentacaoProduto(Long movimentacaoId, Produto produto, Fornecedores fornecedor, Acesso idAcesso, TipoMovimentacao tipoMovimentacao, Integer quantidade, LocalDateTime data) {
+    public MovimentacaoProduto(Long movimentacaoId, Produto produto, Fornecedor fornecedor, Acesso idAcesso, TipoMovimentacao tipoMovimentacao, Integer quantidade, LocalDateTime data) {
         this.movimentacaoId = movimentacaoId;
         this.produto = produto;
         this.fornecedor = fornecedor;
@@ -66,11 +66,11 @@ public class MovimentacaoProduto implements Serializable {
         this.produto = produtoId;
     }
 
-    public Fornecedores getFornecedor() {
+    public Fornecedor getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedor(Fornecedores fornecedorId) {
+    public void setFornecedor(Fornecedor fornecedorId) {
         this.fornecedor = fornecedorId;
     }
 
@@ -106,8 +106,12 @@ public class MovimentacaoProduto implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public MovimentacaoProdutoResponse toDtoMovimentacao (){
-        return new MovimentacaoProdutoResponse(movimentacaoId, produto.getDescricao(), fornecedor.getNomeFantasia(), idAcesso.getLogin(), data, tipoMovimentacao.getNome());
+    public MovimentacaoProdutoResponse toDtoMovimentacao() {
+        if (!fornecedor.getNomeFantasia().isEmpty())
+            return new MovimentacaoProdutoResponse(movimentacaoId, produto.getDescricao(), fornecedor.getNomeFantasia(), idAcesso.getLogin(), data, tipoMovimentacao.getNome());
+        else {
+            return new MovimentacaoProdutoResponse(movimentacaoId, produto.getDescricao(), null, idAcesso.getLogin(), data, tipoMovimentacao.getNome());
+        }
     }
 
     @Override

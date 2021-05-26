@@ -1,6 +1,6 @@
 package br.com.gerenciamento.estoque.entity;
 
-import br.com.gerenciamento.estoque.domain.response.FornecedoresResponse;
+import br.com.gerenciamento.estoque.domain.response.FornecedorResponse;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Fornecedores implements Serializable {
+public class Fornecedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,9 +28,13 @@ public class Fornecedores implements Serializable {
 
     private String razaoSocial;
 
-    private Long cnpj;
-
     private String responsavel;
+
+    private Integer telefone;
+
+    private String email;
+
+    private Long cnpj;
 
     private String logradouro;
 
@@ -46,30 +50,29 @@ public class Fornecedores implements Serializable {
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
 
-    @OneToMany(mappedBy = "fornecedores", cascade = CascadeType.ALL)
-    private List<Contato> contatos = new ArrayList<>();
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<MovimentacaoProduto> movimentacaoProdutos = new ArrayList<>();
 
+    @JoinColumn(name = "produtoId")
+    @OneToMany
+    private List<Produto> produtos = new ArrayList<>();
+
     private String status;
 
-    public Fornecedores() {
+    public Fornecedor() {
     }
 
-    public Fornecedores(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String responsavel, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, List<Contato> contatos, List<MovimentacaoProduto> movimentacaoProdutos, String status) {
+    public Fornecedor(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, List<MovimentacaoProduto> movimentacaoProdutos, String status) {
         this.id = id;
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
-        this.responsavel = responsavel;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
         this.cidade = cidade;
-        this.contatos = contatos;
         this.movimentacaoProdutos = movimentacaoProdutos;
         this.status = status;
     }
@@ -104,22 +107,6 @@ public class Fornecedores implements Serializable {
 
     public void setCnpj(Long cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
-    }
-
-    public List<Contato> getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
     }
 
     public String getRazaoSocial() {
@@ -186,9 +173,41 @@ public class Fornecedores implements Serializable {
         this.movimentacaoProdutos = movimentacaoProdutos;
     }
 
-    public FornecedoresResponse toDtoFornecedores() {
-        return new FornecedoresResponse(id, nomeFantasia, razaoSocial, cnpj, responsavel, logradouro, numero,
-                complemento, bairro, cep, cidade.getNome(), cidade.getEstado().getNome(), contatos.size(), movimentacaoProdutos.size());
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Integer getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Integer telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public FornecedorResponse toDtoFornecedor() {
+        return new FornecedorResponse(id, nomeFantasia, razaoSocial, cnpj, logradouro, numero,
+                complemento, bairro, cep, cidade.getNome(), cidade.getEstado().getNome(), movimentacaoProdutos.size());
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     @Override

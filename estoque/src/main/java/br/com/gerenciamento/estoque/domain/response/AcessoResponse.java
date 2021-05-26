@@ -11,9 +11,6 @@ import java.util.Set;
 
 public class AcessoResponse {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private String login;
 
     @NotEmpty

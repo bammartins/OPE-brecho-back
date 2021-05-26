@@ -3,13 +3,12 @@ package br.com.gerenciamento.estoque.domain.response;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class FornecedoresResponse {
+public class FornecedorResponse {
 
     private Long id;
     private String nomeFantasia;
     private String razaoSocial;
     private Long cnpj;
-    private String responsavel;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -17,16 +16,14 @@ public class FornecedoresResponse {
     private String cep;
     private String cidade;
     private String estado;
-    private Integer contatos;
     private Integer movimentacaoProdutos;
 
-    public FornecedoresResponse(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String responsavel, String logradouro, String numero,
-                                String complemento, String bairro, String cep, String cidade, String estado, Integer contatos, Integer movimentacaoProdutos) {
+    public FornecedorResponse(Long id, String nomeFantasia, String razaoSocial, Long cnpj, String logradouro, String numero,
+                              String complemento, String bairro, String cep, String cidade, String estado, Integer movimentacaoProdutos) {
         this.id = id;
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
-        this.responsavel = responsavel;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -34,11 +31,10 @@ public class FornecedoresResponse {
         this.cep = cep;
         this.cidade = cidade;
         this.estado = estado;
-        this.contatos = contatos;
         this.movimentacaoProdutos = movimentacaoProdutos;
     }
 
-    public FornecedoresResponse() {
+    public FornecedorResponse() {
     }
 
     public Long getId() {
@@ -71,14 +67,6 @@ public class FornecedoresResponse {
 
     public void setCnpj(Long cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
     }
 
     public String getLogradouro() {
@@ -135,14 +123,6 @@ public class FornecedoresResponse {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public Integer getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(Integer contatos) {
-        this.contatos = contatos;
     }
 
     public Integer getMovimentacaoProdutos() {

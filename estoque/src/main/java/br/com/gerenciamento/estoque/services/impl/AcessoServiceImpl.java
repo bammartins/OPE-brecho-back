@@ -29,7 +29,7 @@ public class AcessoServiceImpl implements AcessoService {
     @Override
     public void salvarAcesso(AcessoRequest request) {
 
-        Acesso acesso = toEntity(request);
+        var acesso = toEntity(request);
 
         List<MovimentacaoProduto> movimentacaoProdutoList = new ArrayList<>();
         acesso.setMovimentacaoProduto(movimentacaoProdutoList);
@@ -38,9 +38,9 @@ public class AcessoServiceImpl implements AcessoService {
 
     @Override
     public void deletar(Long idAcesso, Long usuario) throws Exception {
-        Acesso acesso = acessoRepository.findById(idAcesso)
+        var acesso = acessoRepository.findById(idAcesso)
                 .orElseThrow(() -> new NotFoundException("Usuario nao encontrado"));
-        if (acesso.getPerfis().equals(Perfil.ADMIN) && acesso.getStatus().equals(Status.ATIVO.getNome())) {
+        if (acesso.getPerfis().contains(Perfil.ADMIN) && acesso.getStatus().equals(Status.ATIVO.getNome())) {
             Acesso usuarioDeletar = acessoRepository.findById(usuario)
                     .orElseThrow(() -> new NotFoundException("Usuario nao encontrado"));
             usuarioDeletar.setStatus(Status.DESATIVO.getNome());
@@ -52,21 +52,33 @@ public class AcessoServiceImpl implements AcessoService {
 
     @Override
     public List<AcessoResponse> findAll(Long idUsuario, boolean isDesativado) throws Exception {
-        Acesso acesso = acessoRepository.findById(idUsuario)
+        var acesso = acessoRepository.findById(idUsuario)
                 .orElseThrow(() -> new NotFoundException("Usuario nao encontrado"));
         if (acesso.getPerfis().contains(Perfil.ADMIN) && acesso.getStatus().equals(Status.ATIVO.getNome())) {
-            return acessoRepository.findAll().stream().filter(ace -> ace.getStatus().equals(Status.ATIVO.getNome())).map(Acesso::toDtoAcesso).collect(Collectors.toList());
+            if (!isDesativado)
+                return acessoRepository.findAll().stream().filter(ace -> ace.getStatus().equals(Status.ATIVO.getNome())).map(Acesso::toDtoAcesso).collect(Collectors.toList());
+            else {
+                return acessoRepository.findAll().stream().filter(ace -> ace.getStatus().equals(Status.DESATIVO.getNome())).map(Acesso::toDtoAcesso).collect(Collectors.toList());
+
+            }
         } else {
             throw new Exception("Voce nao tem permissao para isso");
         }
 
     }
 
+    @Override
+    public AcessoResponse findByLogin(String login, boolean isDesativado) throws Exception {
+        return acessoRepository.findByLogin(login).toDtoAcesso();
+    }
+
     private Acesso toEntity(AcessoRequest request) {
-        Acesso acesso = new Acesso();
+        var acesso = new Acesso();
 
         acesso.setLogin(request.getLogin());
         acesso.setSenha(bCryptPasswordEncoder.encode(request.getSenha()));
+        acesso.addPerfil(Perfil.toEnum(request.getPerfis()));
+        acesso.setStatus(Status.ATIVO.getNome());
 
         return acesso;
     }

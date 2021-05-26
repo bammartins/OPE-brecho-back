@@ -1,11 +1,12 @@
 package br.com.gerenciamento.estoque.services.impl;
 
+import br.com.gerenciamento.estoque.domain.enums.Status;
 import br.com.gerenciamento.estoque.domain.enums.TipoMovimentacao;
 import br.com.gerenciamento.estoque.domain.request.MovimentacaoProdutoResquest;
 import br.com.gerenciamento.estoque.domain.response.MovimentacaoProdutoResponse;
 import br.com.gerenciamento.estoque.entity.MovimentacaoProduto;
 import br.com.gerenciamento.estoque.repository.AcessoRepository;
-import br.com.gerenciamento.estoque.repository.FornecedoresRepository;
+import br.com.gerenciamento.estoque.repository.FornecedorRepository;
 import br.com.gerenciamento.estoque.repository.MovimentacaoProdutoRepository;
 import br.com.gerenciamento.estoque.repository.ProdutoRepository;
 import br.com.gerenciamento.estoque.services.MovimentacaoService;
@@ -24,7 +25,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
 
     public static final String PRODUTO_NAO_ENCONTRADO = "Produto nao encontrado";
 
-    public static final String FORNECEDORES_NAO_ENCONTRADO = "Fornecedores nao encontrado";
+    public static final String FORNECEDORES_NAO_ENCONTRADO = "Fornecedor nao encontrado";
 
     public static final String ACESSO_NAO_ENCONTRADO = "ACESSO nao encontrado";
 
@@ -36,7 +37,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private FornecedoresRepository fornecedoresRepository;
+    private FornecedorRepository fornecedorRepository;
 
     @Autowired
     private AcessoRepository acessoRepository;
@@ -63,9 +64,9 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
             movimentacao.setProduto(produto);
         }
         if (!isNull(movimentacaoProduto.getFornecedorId())) {
-            var fornecedores = fornecedoresRepository.findById(movimentacaoProduto.getFornecedorId())
+            var fornecedor = fornecedorRepository.findById(movimentacaoProduto.getFornecedorId())
                     .orElseThrow(() -> new NotFoundException(FORNECEDORES_NAO_ENCONTRADO));
-            movimentacao.setFornecedor(fornecedores);
+            movimentacao.setFornecedor(fornecedor);
         }
         var acesso = acessoRepository.findById(movimentacaoProduto.getIdAcesso())
                 .orElseThrow(() -> new NotFoundException(ACESSO_NAO_ENCONTRADO));
@@ -92,7 +93,9 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
                 throw new Exception("Quantidade para retirada menor que o permitido");
             }
             produtoCompra.getMovimentacaoProduto().add(movimentacao);
-
+            if (produtoCompra.getQuantidade() < 0) {
+                produtoCompra.setStatus(Status.DESATIVO.getNome());
+            }
             produtoRepository.save(produtoCompra);
         }
 

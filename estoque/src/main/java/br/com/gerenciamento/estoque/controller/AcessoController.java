@@ -3,7 +3,6 @@ package br.com.gerenciamento.estoque.controller;
 import br.com.gerenciamento.estoque.domain.request.AcessoRequest;
 import br.com.gerenciamento.estoque.domain.response.AcessoResponse;
 import br.com.gerenciamento.estoque.services.AcessoService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +26,7 @@ public class AcessoController {
 
     @PostMapping(path = "/cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void salvarMovimentacao(@RequestBody AcessoRequest request) {
+    public void salvarAcesso(@RequestBody AcessoRequest request) {
         acessoService.salvarAcesso(request);
     }
 
@@ -40,7 +39,15 @@ public class AcessoController {
     @GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AcessoResponse> findAll(
             @RequestParam Long idUsuario,
-            @RequestParam (required = false) boolean isDesativado) throws Exception {
+            @RequestParam(required = false) boolean isDesativado) throws Exception {
         return acessoService.findAll(idUsuario, isDesativado);
+    }
+
+
+    @GetMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public AcessoResponse findByLogin(
+            @RequestParam String login,
+            @RequestParam(required = false) boolean isDesativado) throws Exception {
+        return acessoService.findByLogin(login, isDesativado);
     }
 }

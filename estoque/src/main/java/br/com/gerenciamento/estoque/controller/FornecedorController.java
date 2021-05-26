@@ -1,9 +1,8 @@
 package br.com.gerenciamento.estoque.controller;
 
-import br.com.gerenciamento.estoque.domain.request.ContatoRequest;
-import br.com.gerenciamento.estoque.domain.request.FornecedoresRequest;
-import br.com.gerenciamento.estoque.domain.response.ContatoResponse;
-import br.com.gerenciamento.estoque.services.ContatoService;
+import br.com.gerenciamento.estoque.domain.request.FornecedorRequest;
+import br.com.gerenciamento.estoque.domain.response.FornecedorResponse;
+import br.com.gerenciamento.estoque.services.FornecedorService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,42 +19,42 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/contatos")
-public class ContatoController {
-
+@RequestMapping("/fornecedor")
+public class FornecedorController {
 
     @Autowired
-    private ContatoService contatoService;
+    private FornecedorService fornecedorService;
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ContatoResponse localizarContato(@PathVariable Long id) throws NotFoundException {
+    public FornecedorResponse localizarFornecedor(@PathVariable Long id) throws NotFoundException {
 
-        return contatoService.find(id);
+        return fornecedorService.find(id);
     }
 
     @GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ContatoResponse> localizarContatos() throws NotFoundException {
+    public List<FornecedorResponse> localizarFornecedor() throws NotFoundException {
 
-        return contatoService.findAll();
+        return fornecedorService.findAll();
     }
 
     @PostMapping(path = "/cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarFornecedor(@RequestBody ContatoRequest contatoRequest) throws NotFoundException {
+    public void cadastrarFornecedor(@RequestBody FornecedorRequest fornecedorRequest) throws NotFoundException {
 
-        contatoService.cadastrar(contatoRequest);
+        fornecedorService.cadastrar(fornecedorRequest);
     }
 
     @PostMapping(path = "/deletar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void deletarFornecedores(@RequestParam Long id, Long usuario) throws Exception {
-        contatoService.deletar(id, usuario);
+    public void deletarFornecedor(@RequestParam Long id, Long usuario) throws NotFoundException {
+        fornecedorService.deletar(id, usuario);
     }
 
     @PostMapping(path = "/alterar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void alterarProduto(@RequestBody ContatoRequest contatoRequest,
+    public void alterarFornecedor(@RequestBody FornecedorRequest produto,
                                @RequestParam Long usuario) throws NotFoundException {
-        contatoService.alterarProduto(contatoRequest, usuario);
+        fornecedorService.alterar(produto, usuario);
     }
+
 }
